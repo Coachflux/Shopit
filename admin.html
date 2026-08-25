@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#7c5cfc">
+    <title>ShopNG - Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .admin-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .admin-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+        }
+        .admin-header h1 { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+        .admin-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px; margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--surface-raised); border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft); padding: 18px; text-align: center;
+        }
+        .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; font-weight: 600; }
+        .admin-toolbar {
+            display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;
+            align-items: center;
+        }
+        .admin-search {
+            flex: 1; min-width: 200px; padding: 10px 14px;
+            border-radius: var(--radius-md); border: 2px solid var(--border);
+            background: var(--surface-raised); font-family: inherit; font-size: 0.85rem;
+            outline: none;
+        }
+        .admin-search:focus { border-color: var(--primary); }
+        .admin-select {
+            padding: 10px 14px; border-radius: var(--radius-md); border: 2px solid var(--border);
+            background: var(--surface-raised); font-family: inherit; font-size: 0.85rem;
+            outline: none; cursor: pointer;
+        }
+        .admin-refresh {
+            padding: 10px 16px; border-radius: var(--radius-md); border: none;
+            background: var(--primary); color: white; font-weight: 600; cursor: pointer;
+            font-family: inherit; display: flex; align-items: center; gap: 6px;
+        }
+        .admin-refresh:active { transform: scale(0.97); }
+        .admin-orders { display: flex; flex-direction: column; gap: 14px; }
+        .admin-order-card {
+            background: var(--surface-raised); border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft); overflow: hidden;
+        }
+        .admin-order-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 16px; background: rgba(124,92,252,0.04);
+            border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 8px;
+        }
+        .admin-order-id { font-weight: 700; font-size: 0.9rem; color: var(--primary); }
+        .admin-order-date { font-size: 0.75rem; color: var(--muted); }
+        .admin-status-select {
+            padding: 6px 10px; border-radius: 8px; border: 2px solid var(--border);
+            background: var(--surface-raised); font-family: inherit; font-size: 0.75rem;
+            font-weight: 600; cursor: pointer; outline: none;
+        }
+        .admin-order-body { padding: 14px 16px; }
+        .admin-customer-info {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px; margin-bottom: 14px;
+        }
+        .admin-info-item { font-size: 0.8rem; }
+        .admin-info-item strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .admin-info-item span { color: var(--text-secondary); }
+        .admin-items-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+        .admin-items-table th, .admin-items-table td {
+            text-align: left; padding: 8px; font-size: 0.78rem; border-bottom: 1px solid var(--border);
+        }
+        .admin-items-table th { color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 0.5px; }
+        .admin-items-table td { color: var(--text-secondary); }
+        .admin-items-table img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; vertical-align: middle; margin-right: 8px; }
+        .admin-order-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 16px; background: rgba(124,92,252,0.02);
+            border-top: 1px solid var(--border); flex-wrap: wrap; gap: 8px;
+        }
+        .admin-total { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
+        .admin-payment-method { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+        .admin-empty {
+            text-align: center; padding: 60px 20px;
+        }
+        .admin-empty i { font-size: 3rem; color: var(--muted); margin-bottom: 16px; }
+        .admin-empty h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .admin-empty p { color: var(--muted); font-size: 0.85rem; }
+        .badge-admin {
+            display: inline-flex; align-items: center; padding: 4px 10px;
+            border-radius: 20px; font-size: 0.7rem; font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .admin-customer-info { grid-template-columns: 1fr; }
+            .admin-items-table th, .admin-items-table td { padding: 6px 4px; font-size: 0.7rem; }
+            .admin-items-table img { width: 28px; height: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-shield-alt"></i> ShopNG Admin</h1>
+            <button class="neu-btn neu-btn-secondary" onclick="window.location.href='index.html'">
+                <i class="fas fa-arrow-left"></i> Back to Store
+            </button>
+        </div>
+
+        <div class="admin-stats" id="adminStats">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotalOrders">0</div>
+                <div class="stat-label">Total Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statTotalRevenue">₦0</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statPending">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statDelivered">0</div>
+                <div class="stat-label">Delivered</div>
+            </div>
+        </div>
+
+        <div class="admin-toolbar">
+            <input type="text" class="admin-search" id="adminSearch" placeholder="Search by order ID, customer name, phone..." oninput="filterAdminOrders()">
+            <select class="admin-select" id="adminStatusFilter" onchange="filterAdminOrders()">
+                <option value="all">All Statuses</option>
+                <option value="Processing">Processing</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Out for Delivery">Out for Delivery</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+            <button class="admin-refresh" onclick="loadAdminOrders()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+
+        <div class="admin-orders" id="adminOrders">
+            <div class="admin-empty">
+                <i class="fas fa-box-open"></i>
+                <h3>No orders yet</h3>
+                <p>Orders placed by customers will appear here automatically.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allOrders = [];
+
+        function loadAdminOrders() {
+            try {
+                const stored = localStorage.getItem('orders');
+                allOrders = stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                allOrders = [];
+            }
+            updateStats();
+            filterAdminOrders();
+        }
+
+        function updateStats() {
+            const total = allOrders.length;
+            const revenue = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+            const pending = allOrders.filter(o => o.status === 'Processing').length;
+            const delivered = allOrders.filter(o => o.status === 'Delivered').length;
+
+            document.getElementById('statTotalOrders').textContent = total;
+            document.getElementById('statTotalRevenue').textContent = '₦' + revenue.toLocaleString('en-NG');
+            document.getElementById('statPending').textContent = pending;
+            document.getElementById('statDelivered').textContent = delivered;
+        }
+
+        function getStatusBadgeClass(status) {
+            switch(status) {
+                case 'Delivered': return 'badge-success';
+                case 'Processing': return 'badge-warning';
+                case 'Shipped': return 'badge-primary';
+                case 'Out for Delivery': return 'badge-primary';
+                case 'Cancelled': return 'badge-danger';
+                default: return 'badge-primary';
+            }
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                localStorage.setItem('orders', JSON.stringify(allOrders));
+                updateStats();
+                filterAdminOrders();
+            }
+        }
+
+        function filterAdminOrders() {
+            const search = document.getElementById('adminSearch').value.toLowerCase().trim();
+            const statusFilter = document.getElementById('adminStatusFilter').value;
+            const container = document.getElementById('adminOrders');
+
+            let filtered = allOrders;
+
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(o => o.status === statusFilter);
+            }
+
+            if (search) {
+                filtered = filtered.filter(o => {
+                    const name = (o.customerName || o.address?.name || '').toLowerCase();
+                    const phone = (o.customerPhone || o.address?.phone || '').toLowerCase();
+                    const id = (o.id || '').toLowerCase();
+                    const email = (o.customerEmail || '').toLowerCase();
+                    return name.includes(search) || phone.includes(search) || id.includes(search) || email.includes(search);
+                });
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="admin-empty">
+                        <i class="fas fa-search"></i>
+                        <h3>No orders found</h3>
+                        <p>Try adjusting your search or filter criteria.</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(order => {
+                const items = order.items || [];
+                const statusClass = getStatusBadgeClass(order.status);
+                const paymentLabel = order.paymentMethod === 'card' ? 'Credit/Debit Card' :
+                    order.paymentMethod === 'transfer' ? 'Bank Transfer' : 'Cash on Delivery';
+
+                return `
+                <div class="admin-order-card">
+                    <div class="admin-order-header">
+                        <div>
+                            <div class="admin-order-id">${order.id}</div>
+                            <div class="admin-order-date">${formatDate(order.date)}</div>
+                        </div>
+                        <select class="admin-status-select" onchange="updateOrderStatus('${order.id}', this.value)">
+                            <option value="Processing" ${order.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                            <option value="Shipped" ${order.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                            <option value="Out for Delivery" ${order.status === 'Out for Delivery' ? 'selected' : ''}>Out for Delivery</option>
+                            <option value="Delivered" ${order.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                            <option value="Cancelled" ${order.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="admin-order-body">
+                        <div class="admin-customer-info">
+                            <div class="admin-info-item">
+                                <strong>Customer</strong>
+                                <span>${order.customerName || order.address?.name || 'N/A'}</span>
+                            </div>
+                            <div class="admin-info-item">
+                                <strong>Phone</strong>
+                                <span>${order.customerPhone || order.address?.phone || 'N/A'}</span>
+                            </div>
+                            <div class="admin-info-item">
+                                <strong>Email</strong>
+                                <span>${order.customerEmail || 'N/A'}</span>
+                            </div>
+                            <div class="admin-info-item">
+                                <strong>Address</strong>
+                                <span>${order.address?.text || 'N/A'}</span>
+                            </div>
+                        </div>
+                        <table class="admin-items-table">
+                            <thead>
+                                <tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+                            </thead>
+                            <tbody>
+                                ${items.map(item => `
+                                    <tr>
+                                        <td><img src="${item.image}" alt="">${item.name}</td>
+                                        <td>${item.qty}</td>
+                                        <td>₦${(item.price || 0).toLocaleString('en-NG')}</td>
+                                        <td>₦${((item.price || 0) * item.qty).toLocaleString('en-NG')}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="admin-order-footer">
+                        <div class="admin-payment-method"><i class="fas fa-credit-card"></i> ${paymentLabel} &bull; <span class="badge-admin ${order.paymentStatus === 'Paid' ? 'badge-success' : 'badge-warning'}">${order.paymentStatus || 'Pending'}</span></div>
+                        <div class="admin-total">₦${(order.total || 0).toLocaleString('en-NG')}</div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // Auto-refresh every 5 seconds for "real-time" feel
+        setInterval(loadAdminOrders, 5000);
+
+        // Initial load
+        loadAdminOrders();
+    </script>
+</body>
+</html>
