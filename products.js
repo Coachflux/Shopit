@@ -196,7 +196,7 @@ const products = [
     },
     {
         id: 13,
-        name: "LG 55" OLED TV",
+        name: "LG 55\" OLED TV",
         category: "Electronics",
         brand: "LG",
         price: 650000,
@@ -269,7 +269,7 @@ const products = [
         rating: 4.7,
         reviews: 88,
         image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=400&fit=crop",
-        description: "15.6" 165Hz FHD display. Intel Core i7-13700H. 16GB DDR5 RAM. 1TB NVMe SSD. RGB backlit keyboard.",
+        description: "15.6\" 165Hz FHD display. Intel Core i7-13700H. 16GB DDR5 RAM. 1TB NVMe SSD. RGB backlit keyboard.",
         stock: 7,
         colors: ["#1a1a1a", "#c0c0c0"],
         sizes: [],
@@ -326,7 +326,7 @@ const products = [
     },
     {
         id: 21,
-        name: "Samsung 43" Smart TV",
+        name: "Samsung 43\" Smart TV",
         category: "Electronics",
         brand: "Samsung",
         price: 280000,
