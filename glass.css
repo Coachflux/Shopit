@@ -1,7 +1,7 @@
 /* ShopNG — Discover Glass theme (loads after style.css; overrides look only, no logic) */
 :root{--bg:#efe4fb;--surface:rgba(255,255,255,.35);--surface-raised:rgba(255,255,255,.5);--primary:#7a4cf5;--primary-light:#a77bff;--primary-dark:#5f33d8;--secondary:#ff6fa8;--accent:#3ee0c0;--text:#2a2354;--text-secondary:#5d5586;--muted:#8c84b5;--border:rgba(255,255,255,.75);
---glass:linear-gradient(135deg,rgba(255,255,255,.68),rgba(255,255,255,.22));--glass-line:1px solid rgba(255,255,255,.72);
---shadow-soft:0 14px 30px -16px rgba(110,80,190,.5),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -10px 20px rgba(159,224,245,.18);
+--glass:linear-gradient(135deg,rgba(255,255,255,.68),rgba(255,255,255,.22));--glass-line:1px solid rgba(255,255,255,.4);
+--shadow-soft:0 14px 30px -16px rgba(110,80,190,.5),inset 10px 10px 22px -14px rgba(255,255,255,.95),inset -8px -10px 22px -12px rgba(159,224,245,.5),inset 0 1px 0 rgba(255,255,255,.95);
 --shadow-raised:0 22px 44px -18px rgba(110,80,190,.55),inset 0 1px 0 rgba(255,255,255,.95),inset 0 -12px 24px rgba(159,224,245,.22);
 --shadow-inset:inset 0 3px 10px rgba(110,80,190,.18);
 --rim:linear-gradient(135deg,#fff,#b9c8ff 30%,#e9c7f5 55%,#9fe6f4 80%,#fff);
@@ -9,14 +9,6 @@
 body{font-family:"Plus Jakarta Sans","Inter",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(150deg,#c4b2ea 0%,#e2cdea 38%,#f5d0e3 70%,#fbc3d6 100%) fixed;color:var(--text)}
 .app-container{background:transparent}
 @media(min-width:768px){body{background:linear-gradient(150deg,#b9a5e6,#e2cdea 45%,#fbc3d6) fixed}.app-container{background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.6),0 40px 100px -30px rgba(110,80,190,.55)}}
-/* floating iridescent bubbles */
-.bg-orbs{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.bg-orbs i{position:absolute;border-radius:var(--blob);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.75),rgba(196,178,234,.35) 45%,rgba(159,230,244,.28) 75%,rgba(247,182,220,.3));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7),inset 0 -14px 30px rgba(159,224,245,.4),0 30px 60px -20px rgba(122,76,245,.35);animation:orb 14s ease-in-out infinite}
-.bg-orbs i:nth-child(1){width:260px;height:190px;top:6%;left:-90px}
-.bg-orbs i:nth-child(2){width:200px;height:150px;top:46%;right:-80px;animation-delay:-5s}
-.bg-orbs i:nth-child(3){width:300px;height:220px;bottom:-60px;left:12%;animation-delay:-9s}
-@keyframes orb{50%{transform:translate(14px,-26px) rotate(6deg)}}
-.app-container>*{position:relative;z-index:1}
 /* glass surfaces */
 .product-card,.cart-item,.cart-summary,.checkout-step,.address-card,.order-card,.profile-menu-item,.notif-item,.review-card,.payment-method,.empty-state,.menu-btn,.cart-btn,.search-bar,.filter-btn,.filter-chip,.add-cart-btn,.qty-btn,.category-icon,.size-option,.delivery-info,.stat-card{background:var(--glass);border:var(--glass-line);box-shadow:var(--shadow-soft);-webkit-backdrop-filter:blur(16px) saturate(170%);backdrop-filter:blur(16px) saturate(170%)}
 .product-card,.cart-item,.cart-summary,.checkout-step,.order-card,.review-card,.notif-item,.empty-state{border-radius:30px 36px 30px 36px/32px 34px 32px 34px}
@@ -92,7 +84,6 @@ body{font-family:"Plus Jakarta Sans","Inter",-apple-system,"Segoe UI",Roboto,Ari
 .toast{background:var(--glass);border:var(--glass-line);box-shadow:var(--shadow-raised);border-left:3px solid var(--primary);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
 .modal-overlay{background:rgba(60,36,120,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .modal-drawer{background:linear-gradient(160deg,rgba(255,255,255,.9),rgba(238,224,250,.88));border-radius:40px 40px 0 0;border:1.5px solid #fff;box-shadow:0 -20px 60px -20px rgba(90,60,170,.5)}
-.page.active{animation:pageFade .45s ease both}
 /* dark mode */
 body.dark-mode{--bg:#1b1438;--surface:rgba(255,255,255,.07);--surface-raised:rgba(255,255,255,.1);--text:#f6f0ff;--text-secondary:#c9bde8;--muted:#9d92c8;--border:rgba(255,255,255,.14);
 --glass:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05));--glass-line:1px solid rgba(255,255,255,.2);
@@ -107,4 +98,27 @@ body.dark-mode .promo-slide,body.dark-mode .promo-title{color:#fff}
 body.dark-mode .product-image-wrap,body.dark-mode .product-detail-img,body.dark-mode .cart-item-img,body.dark-mode .order-item-img{background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.28),rgba(122,76,245,.2))}
 body.dark-mode .modal-drawer{background:linear-gradient(160deg,rgba(44,28,77,.96),rgba(27,20,56,.96))}
 body.dark-mode .form-input,body.dark-mode .form-select,body.dark-mode .form-textarea{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18)}
-@media(prefers-reduced-motion:reduce){.bg-orbs i,.blob-art{animation:none}}
+@media(prefers-reduced-motion:reduce){.blob-art{animation:none}}
+
+/* ---- v2 fixes ---- */
+/* iridescent reflective rim (like the Discover glass) on every glass surface */
+.product-card,.cart-item,.cart-summary,.checkout-step,.address-card,.order-card,.profile-menu-item,.notif-item,.review-card,.payment-method,.empty-state,.menu-btn,.cart-btn,.search-bar,.filter-btn,.filter-chip,.add-cart-btn,.qty-btn,.category-icon,.size-option,.delivery-info,.stat-card,.neu-btn,.promo-carousel,.flash-section,.toast,.modal-drawer,.app-header,.cart-item-img,.order-item-img,.profile-avatar,.countdown-box,.product-image-wrap,.product-detail-img,.promo-btn,.nav-item.active{position:relative}
+.product-card::after,.cart-item::after,.cart-summary::after,.checkout-step::after,.address-card::after,.order-card::after,.profile-menu-item::after,.notif-item::after,.review-card::after,.payment-method::after,.empty-state::after,.menu-btn::after,.cart-btn::after,.search-bar::after,.filter-btn::after,.filter-chip::after,.add-cart-btn::after,.qty-btn::after,.category-icon::after,.size-option::after,.delivery-info::after,.stat-card::after,.neu-btn::after,.promo-carousel::after,.flash-section::after,.toast::after,.modal-drawer::after,.app-header::after,.cart-item-img::after,.order-item-img::after,.profile-avatar::after,.countdown-box::after,.product-image-wrap::after,.product-detail-img::after,.promo-btn::after,.nav-item.active::after,.bottom-nav::after,.sticky-action::after,.wishlist-btn::after,.detail-wishlist-btn::after,.back-btn::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.6px;background:linear-gradient(135deg,rgba(255,255,255,.98),#b9c8ff 26%,#ecc9f6 50%,#9fe6f4 76%,rgba(255,255,255,.95));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none;z-index:3}
+.form-input,.form-select,.form-textarea{border:1.5px solid rgba(255,255,255,.95);box-shadow:var(--shadow-inset),0 0 0 1px rgba(185,200,255,.5)}
+/* top bar: floating glass pill that stays put */
+.app-header{position:sticky;top:calc(8px + env(safe-area-inset-top,0px));z-index:900;margin:8px 12px 6px;padding:10px 14px;border-radius:36px 42px 36px 42px/38px 40px 38px 40px;background:var(--glass);border:var(--glass-line);box-shadow:var(--shadow-soft);-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%)}
+.app-header .menu-btn,.app-header .cart-btn{box-shadow:var(--shadow-soft)}
+/* hero banner: shorter, bigger picture that melts into the banner */
+.promo-slide{min-height:0!important;padding:14px 10px 14px 20px!important;gap:4px;align-items:center}
+.promo-content{min-width:0}
+.promo-label{font-size:.62rem}
+.promo-title{font-size:1.3rem!important;line-height:1.1;margin:4px 0 6px}
+.promo-subtitle{font-size:.72rem!important;line-height:1.35;margin-bottom:10px!important}
+.promo-btn{padding:8px 16px;font-size:.74rem;white-space:nowrap}
+.promo-image{width:188px;height:150px;margin:-6px -4px -6px 0;flex-shrink:0}
+.promo-img{width:100%;height:100%;object-fit:cover;border-radius:44% 56% 50% 50%/50% 46% 54% 50%;mix-blend-mode:multiply;-webkit-mask-image:radial-gradient(closest-side,#000 66%,transparent 100%);mask-image:radial-gradient(closest-side,#000 66%,transparent 100%);filter:saturate(1.15) contrast(1.04) drop-shadow(0 12px 14px rgba(90,60,170,.35));animation:floaty 6s ease-in-out infinite}
+body.dark-mode .promo-img{mix-blend-mode:normal}
+.promo-discount-badge{top:2px;right:2px}
+/* pages: room for the floating bars; detail sheet above everything */
+#page-product{padding-bottom:180px}
+.modal-drawer{max-height:82vh;padding-bottom:48px}
