@@ -3,12 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#7c5cfc">
+    <meta name="theme-color" content="#c4b2ea">
     <title>ShopNG</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./glass.css">
 </head>
 <body>
+    <div class="bg-orbs" aria-hidden="true"><i></i><i></i><i></i></div>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<path id="gbPath" d="M120 70C60 90 20 150 20 215C20 290 70 350 140 355C200 358 230 320 300 315C370 310 400 345 460 345C530 345 580 295 580 230C580 165 540 120 480 118C420 116 380 150 320 142C260 134 230 60 170 62C150 60 135 64 120 70Z"/>
+<clipPath id="gbClip"><use href="#gbPath"/></clipPath>
+<linearGradient id="gbFill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6defa" stop-opacity=".38"/><stop offset=".5" stop-color="#efdcf6" stop-opacity=".1"/><stop offset="1" stop-color="#f9d6ea" stop-opacity=".3"/></linearGradient>
+<radialGradient id="gbCy" cx=".2" cy=".9" r=".35"><stop offset="0" stop-color="#8fe3f5" stop-opacity=".6"/><stop offset="1" stop-color="#8fe3f5" stop-opacity="0"/></radialGradient>
+<radialGradient id="gbPk" cx=".88" cy=".3" r=".3"><stop offset="0" stop-color="#f7b6dc" stop-opacity=".45"/><stop offset="1" stop-color="#f7b6dc" stop-opacity="0"/></radialGradient>
+<linearGradient id="gbRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".3" stop-color="#b9c8ff"/><stop offset=".55" stop-color="#e9c7f5"/><stop offset=".8" stop-color="#9fe6f4"/><stop offset="1" stop-color="#fff" stop-opacity=".9"/></linearGradient>
+<linearGradient id="gbHg" x1="0" y1="0" x2=".55" y2=".5"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+<mask id="gbHm" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="420"><rect width="600" height="420" fill="url(#gbHg)"/></mask>
+<filter id="gb18" filterUnits="userSpaceOnUse" x="-100" y="-100" width="800" height="640"><feGaussianBlur stdDeviation="18"/></filter>
+<filter id="gb6" filterUnits="userSpaceOnUse" x="-100" y="-100" width="800" height="640"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="gb2" filterUnits="userSpaceOnUse" x="-100" y="-100" width="800" height="640"><feGaussianBlur stdDeviation="2.2"/></filter>
+<g id="gbShadow"><use href="#gbPath" fill="#a98bd6" opacity=".5" filter="url(#gb18)" transform="translate(-10 40)"/><use href="#gbPath" fill="#f4a8cc" opacity=".35" filter="url(#gb18)" transform="translate(30 50) scale(.96)"/></g>
+<g id="gbGlass"><rect width="600" height="420" fill="url(#gbFill)"/><rect width="600" height="420" fill="url(#gbCy)"/><rect width="600" height="420" fill="url(#gbPk)"/>
+<use href="#gbPath" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="22" filter="url(#gb6)"/>
+<use href="#gbPath" fill="none" stroke="url(#gbRim)" stroke-width="11" opacity=".9" filter="url(#gb2)"/>
+<use href="#gbPath" fill="none" stroke="#9fe0f5" stroke-opacity=".55" stroke-width="9" filter="url(#gb6)" transform="translate(0 -6)"/>
+<ellipse cx="170" cy="338" rx="110" ry="12" fill="#fff" opacity=".55" filter="url(#gb6)"/><ellipse cx="450" cy="333" rx="90" ry="9" fill="#fff" opacity=".4" filter="url(#gb6)"/></g>
+<g id="gbEdge"><g mask="url(#gbHm)"><use href="#gbPath" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" filter="url(#gb2)" transform="translate(300 210) scale(.95) translate(-300 -210)"/></g><use href="#gbPath" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="1.6"/></g>
+</defs></svg>
     <div class="app-container">
         <!-- Toast Container -->
         <div class="toast-container" id="toastContainer"></div>
@@ -58,7 +82,7 @@
                                 <button class="promo-btn" onclick="navigateTo('categories')">Shop Now <i class="fas fa-arrow-right"></i></button>
                             </div>
                             <div class="promo-image">
-                                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=300&fit=crop" alt="Promo">
+                                <svg class="blob-art" viewBox="-20 20 640 400" role="img" aria-label="Promo" stroke-linejoin="round"><use href="#gbShadow"/><g clip-path="url(#gbClip)"><image href="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=300&fit=crop" x="20" y="62" width="560" height="293" preserveAspectRatio="xMidYMid slice"/><use href="#gbGlass"/></g><use href="#gbEdge"/></svg>
                                 <div class="promo-discount-badge">50%<br>OFF</div>
                             </div>
                         </div>
@@ -70,7 +94,7 @@
                                 <button class="promo-btn" onclick="navigateTo('categories')">Grab Deal <i class="fas fa-arrow-right"></i></button>
                             </div>
                             <div class="promo-image">
-                                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop" alt="Promo">
+                                <svg class="blob-art" viewBox="-20 20 640 400" role="img" aria-label="Promo" stroke-linejoin="round"><use href="#gbShadow"/><g clip-path="url(#gbClip)"><image href="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop" x="20" y="62" width="560" height="293" preserveAspectRatio="xMidYMid slice"/><use href="#gbGlass"/></g><use href="#gbEdge"/></svg>
                                 <div class="promo-discount-badge">20%<br>OFF</div>
                             </div>
                         </div>
@@ -82,7 +106,7 @@
                                 <button class="promo-btn" onclick="navigateTo('product', {id: 4})">Pre-order <i class="fas fa-arrow-right"></i></button>
                             </div>
                             <div class="promo-image">
-                                <img src="https://images.unsplash.com/photo-1696446701796-da61225697cc?w=300&h=300&fit=crop" alt="Promo">
+                                <svg class="blob-art" viewBox="-20 20 640 400" role="img" aria-label="Promo" stroke-linejoin="round"><use href="#gbShadow"/><g clip-path="url(#gbClip)"><image href="https://images.unsplash.com/photo-1696446701796-da61225697cc?w=300&h=300&fit=crop" x="20" y="62" width="560" height="293" preserveAspectRatio="xMidYMid slice"/><use href="#gbGlass"/></g><use href="#gbEdge"/></svg>
                                 <div class="promo-discount-badge">NEW</div>
                             </div>
                         </div>
